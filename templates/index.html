@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
@@ -30,7 +33,9 @@
             font-weight: bold;
         }
 
-        .brand span { color: #36d399; }
+        .brand span {
+            color: #36d399;
+        }
 
         .nav-tag {
             color: #b9c7dd;
@@ -48,7 +53,9 @@
             font-weight: bold;
         }
 
-        .hero p { color: #d3e8e7; }
+        .hero p {
+            color: #d3e8e7;
+        }
 
         .container-main {
             width: 92%;
@@ -56,11 +63,12 @@
             margin: 30px auto;
         }
 
-        .stat-card, .panel {
+        .stat-card,
+        .panel {
             background: white;
             border-radius: 15px;
             padding: 23px;
-            box-shadow: 0 4px 20px rgba(20,40,80,.06);
+            box-shadow: 0 4px 20px rgba(20, 40, 80, 0.06);
             margin-bottom: 22px;
         }
 
@@ -85,32 +93,38 @@
             margin-bottom: 20px;
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             padding: 12px;
             border: 1px solid #dce3ed;
             border-radius: 9px;
             margin-bottom: 15px;
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             border-color: #159b78;
-            box-shadow: 0 0 0 3px rgba(21,155,120,.12);
+            box-shadow: 0 0 0 3px rgba(21, 155, 120, 0.12);
         }
 
-        textarea { resize: vertical; }
+        textarea {
+            resize: vertical;
+        }
 
-        .btn-predict {
+        .btn-predict,
+        .btn-upload {
             width: 100%;
             padding: 14px;
             border: none;
             border-radius: 9px;
-            background: linear-gradient(90deg,#087f68,#20b486);
+            background: linear-gradient(90deg, #087f68, #20b486);
             color: white;
             font-weight: bold;
             font-size: 16px;
         }
 
-        .btn-predict:hover {
+        .btn-predict:hover,
+        .btn-upload:hover {
             background: #086c59;
             color: white;
         }
@@ -121,38 +135,81 @@
             margin-bottom: 22px;
         }
 
-        .safe-card {
+        .safe-card,
+        .risk-low {
             background: #e7f8ef;
             border: 1px solid #a7e5bf;
         }
 
-        .fraud-card {
+        .fraud-card,
+        .risk-high {
             background: #fff0f0;
             border: 1px solid #f3b4b4;
         }
 
+        .risk-medium {
+            background: #fff8e6;
+            border: 1px solid #f2d58b;
+        }
+
         .score {
-            font-size: 48px;
+            font-size: 45px;
             font-weight: bold;
         }
 
-        .safe-text { color: #13834b; }
-        .fraud-text { color: #d93636; }
+        .safe-text {
+            color: #13834b;
+        }
+
+        .fraud-text {
+            color: #d93636;
+        }
+
+        .trust-text {
+            color: #13834b;
+        }
+
+        .risk-text {
+            color: #d93636;
+        }
 
         .progress {
             height: 15px;
             border-radius: 20px;
             background: #e4eaf0;
             margin: 12px 0 20px;
+            overflow: hidden;
         }
 
         .progress-bar {
             border-radius: 20px;
+            width: 0;
+            transition: width 0.8s ease;
         }
 
         .analysis-item {
             padding: 12px 0;
             border-bottom: 1px solid #edf0f5;
+        }
+
+        .upload-box {
+            border: 2px dashed #20a783;
+            border-radius: 13px;
+            padding: 30px 15px;
+            text-align: center;
+            background: #f4fcf9;
+            margin-bottom: 18px;
+        }
+
+        .upload-icon {
+            font-size: 45px;
+        }
+
+        .warning-item {
+            padding: 12px;
+            border-radius: 8px;
+            background: #f5f7fa;
+            margin-bottom: 10px;
         }
 
         .footer {
@@ -166,9 +223,30 @@
             font-size: 12px;
         }
 
-        @media(max-width: 600px) {
-            .hero h1 { font-size: 27px; }
-            .score { font-size: 38px; }
+        .score-box {
+            padding: 18px;
+            border-radius: 12px;
+            background: white;
+            height: 100%;
+        }
+
+        .score-heading {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 27px;
+            }
+
+            .score {
+                font-size: 36px;
+            }
+
+            .nav-tag {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -184,13 +262,13 @@
 
 <section class="hero">
     <h1>Welcome to JobShield AI</h1>
-    <p>Detect fraudulent job postings using Machine Learning and NLP.</p>
-    <span class="badge bg-success">● AI Detection System Active</span>
+    <p>Detect fraudulent job postings and identify suspicious offer letters using intelligent analysis.</p>
+    <span class="badge bg-success">● Detection System Active</span>
 </section>
 
 <div class="container-main">
 
-    <!-- Dashboard statistics -->
+    <!-- DASHBOARD STATISTICS -->
     <h4 class="section-title">📊 Dashboard Overview</h4>
 
     <div class="row">
@@ -219,8 +297,8 @@
         </div>
     </div>
 
+    <!-- JOB ANALYSIS RESULT -->
     {% if result %}
-    <!-- Prediction results -->
     <div class="panel">
         <h4 class="section-title">🔍 Job Security Analysis Result</h4>
 
@@ -239,67 +317,236 @@
                 <div class="col-md-6">
                     <div class="stat-label">Job Safety Score</div>
                     <div class="score safe-text">{{ result.safety_score }}/100</div>
+
                     <div class="progress">
                         <div class="progress-bar bg-success"
-                             style="width: {{ result.safety_score }}%">
-                        </div>
+                             data-progress="{{ result.safety_score }}"></div>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="stat-label">Fraud Risk Score</div>
-                    <div class="score fraud-text">{{ result.fraud_score }}%</div>
+                    <div class="score fraud-text">{{ result.fraud_score }}/100</div>
+
                     <div class="progress">
                         <div class="progress-bar bg-danger"
-                             style="width: {{ result.fraud_score }}%">
-                        </div>
+                             data-progress="{{ result.fraud_score }}"></div>
                     </div>
                 </div>
             </div>
             {% else %}
             <div class="alert alert-warning mt-3">
                 Probability scores are unavailable for this model.
-                The classification result is still available.
             </div>
             {% endif %}
 
             <p class="small-note">
-                Scores represent the model's predicted class probabilities,
-                not a guarantee of job safety.
+                Model probabilities are estimates, not guarantees of job safety.
             </p>
         </div>
     </div>
     {% endif %}
 
+    <!-- OFFER LETTER UPLOAD -->
+    <div class="panel">
+        <h4 class="section-title">📄 Offer Letter Verification</h4>
+
+        <p class="text-muted">
+            Upload an internship or job offer letter to identify suspicious
+            payment requests, unusual email addresses and missing details.
+        </p>
+
+        <form action="{{ url_for('verify_offer_letter') }}"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div class="upload-box">
+                <div class="upload-icon">📁</div>
+                <h5>Upload Your Offer Letter</h5>
+
+                <p class="small-note">
+                    Supported formats: PDF, JPG, JPEG and PNG.
+                    Maximum size: 10 MB.
+                </p>
+
+                <input type="file"
+                       class="form-control"
+                       name="offer_letter"
+                       id="offer_letter"
+                       accept=".pdf,.jpg,.jpeg,.png"
+                       required>
+
+                <div id="fileName" class="small-note mt-2">
+                    No file selected
+                </div>
+            </div>
+
+            <button type="submit" class="btn-upload">
+                🔍 Verify Offer Letter
+            </button>
+        </form>
+
+        <p class="small-note mt-3">
+            Your document is processed for text extraction and warning analysis.
+            Avoid uploading documents containing unnecessary personal or financial information.
+        </p>
+    </div>
+
+    <!-- OFFER LETTER ANALYSIS RESULT -->
+    {% if offer_result %}
+    <div class="panel">
+
+        <h4 class="section-title">🛡 Offer Letter Analysis Report</h4>
+
+        {% if offer_result.error %}
+
+            <div class="alert alert-danger">
+                {{ offer_result.error }}
+            </div>
+
+        {% else %}
+
+            <p>
+                <strong>File:</strong> {{ offer_result.filename }}
+            </p>
+
+            {% if offer_result.status == "LOW RISK" %}
+                <div class="result-card risk-low">
+                    <h4 class="text-success">✅ LOW RISK</h4>
+                    <p>No major warning indicators were identified.</p>
+                </div>
+
+            {% elif offer_result.status == "MEDIUM RISK" %}
+                <div class="result-card risk-medium">
+                    <h4 class="text-warning">⚠️ MEDIUM RISK</h4>
+                    <p>Some suspicious indicators require further checking.</p>
+                </div>
+
+            {% else %}
+                <div class="result-card risk-high">
+                    <h4 class="text-danger">🚨 HIGH RISK</h4>
+                    <p>Multiple warning indicators were identified. Verify independently before proceeding.</p>
+                </div>
+            {% endif %}
+
+            <!-- TRUST AND RISK SCORES -->
+            <div class="row g-3 mt-2">
+
+                <div class="col-md-6">
+                    <div class="score-box">
+                        <div class="score-heading trust-text">
+                            🟢 Trust Score
+                        </div>
+
+                        <div class="score trust-text">
+                            {{ 100 - offer_result.risk_score }}/100
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-bar bg-success"
+                                 data-progress="{{ 100 - offer_result.risk_score }}"></div>
+                        </div>
+
+                        <p class="small-note">
+                            Calculated as 100 minus the detected risk score.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="score-box">
+                        <div class="score-heading risk-text">
+                            🔴 Risk Score
+                        </div>
+
+                        <div class="score risk-text">
+                            {{ offer_result.risk_score }}/100
+                        </div>
+
+                        <div class="progress">
+                            <div class="progress-bar bg-danger"
+                                 data-progress="{{ offer_result.risk_score }}"></div>
+                        </div>
+
+                        <p class="small-note">
+                            Higher scores indicate more detected warning indicators.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- WARNING SIGNS -->
+            <h5 class="mt-4 mb-3">🔎 Detected Warning Signs</h5>
+
+            {% if offer_result.warnings %}
+                {% for warning in offer_result.warnings %}
+                    <div class="warning-item">
+                        ⚠️ {{ warning }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-success">
+                    No warning indicators were detected by the current checks.
+                </div>
+            {% endif %}
+
+            <!-- MISSING DETAILS -->
+            {% if offer_result.missing_details %}
+                <h5 class="mt-4 mb-3">📌 Details to Verify</h5>
+
+                {% for detail in offer_result.missing_details %}
+                    <div class="warning-item">
+                        • {{ detail }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="alert alert-info mt-4">
+                <strong>Important:</strong> This is an automated,
+                rule-based risk assessment, not proof of fraud or
+                confirmation of authenticity. Verify the company,
+                sender and offer independently through official
+                contact information.
+            </div>
+
+        {% endif %}
+    </div>
+    {% endif %}
+
     <div class="row">
 
-        <!-- Job input form -->
+        <!-- JOB DETECTION FORM -->
         <div class="col-lg-8">
             <div class="panel">
                 <h4 class="section-title">📝 Analyse a Job Posting</h4>
-                <p class="text-muted">Enter the job information below to check its authenticity.</p>
+
+                <p class="text-muted">
+                    Enter the job information below to check its authenticity.
+                </p>
 
                 <form action="{{ url_for('submit') }}" method="POST">
 
                     <div class="row">
+
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="title" placeholder="Job Title" required>
+                                   name="title" placeholder="Job Title" required>
                         </div>
 
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="location" placeholder="Location" required>
+                                   name="location" placeholder="Location" required>
                         </div>
 
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="department" placeholder="Department">
+                                   name="department" placeholder="Department">
                         </div>
 
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="ben" placeholder="Benefits">
+                                   name="ben" placeholder="Benefits">
                         </div>
 
                         <div class="col-md-6">
@@ -329,49 +576,57 @@
 
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="edu" placeholder="Required Education">
+                                   name="edu" placeholder="Required Education">
                         </div>
 
                         <div class="col-md-6">
                             <input type="text" class="form-control"
-                                name="indu" placeholder="Industry">
+                                   name="indu" placeholder="Industry">
                         </div>
 
                         <div class="col-12">
                             <input type="text" class="form-control"
-                                name="func" placeholder="Function">
+                                   name="func" placeholder="Function">
                         </div>
 
                         <div class="col-12">
                             <textarea class="form-control" name="profile"
-                                rows="3" placeholder="Company Profile"></textarea>
+                                      rows="3" placeholder="Company Profile"></textarea>
                         </div>
 
                         <div class="col-12">
                             <textarea class="form-control" name="req"
-                                rows="3" placeholder="Requirements"></textarea>
+                                      rows="3" placeholder="Requirements"></textarea>
                         </div>
 
                         <div class="col-12">
                             <textarea class="form-control" name="des"
-                                rows="4" placeholder="Job Description" required></textarea>
+                                      rows="4" placeholder="Job Description" required></textarea>
                         </div>
+
                     </div>
 
                     <button type="submit" class="btn-predict">
                         🛡 Analyse Job Security
                     </button>
+
                 </form>
             </div>
         </div>
 
-        <!-- Dashboard side panel -->
+        <!-- STATISTICS AND INFORMATION -->
         <div class="col-lg-4">
+
             <div class="panel">
                 <h5 class="section-title">📈 Detection Statistics</h5>
-                <canvas id="jobChart"></canvas>
+
+                <canvas id="jobChart"
+                        data-genuine="{{ stats.genuine }}"
+                        data-fraudulent="{{ stats.fraudulent }}">
+                </canvas>
+
                 <p class="small-note mt-3">
-                    Distribution of predictions made during this server session.
+                    Distribution of job predictions during this server session.
                 </p>
             </div>
 
@@ -380,12 +635,12 @@
 
                 <div class="analysis-item">
                     <strong>01. Job Information</strong>
-                    <div class="small-note">Collects the submitted job details.</div>
+                    <div class="small-note">Collects submitted job details.</div>
                 </div>
 
                 <div class="analysis-item">
                     <strong>02. NLP Processing</strong>
-                    <div class="small-note">Converts text into machine-readable features.</div>
+                    <div class="small-note">Converts text into numerical features.</div>
                 </div>
 
                 <div class="analysis-item">
@@ -394,41 +649,86 @@
                 </div>
 
                 <div class="analysis-item">
-                    <strong>04. Security Result</strong>
-                    <div class="small-note">Displays the predicted job classification and scores.</div>
+                    <strong>04. Offer Letter Analysis</strong>
+                    <div class="small-note">Extracts document text and checks warning indicators.</div>
+                </div>
+
+                <div class="analysis-item">
+                    <strong>05. Security Report</strong>
+                    <div class="small-note">Displays job predictions and offer letter risk results.</div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
+
 </div>
 
 <div class="footer">
-    JobShield AI | Fake Job Detection using NLP and Machine Learning
+    JobShield AI | Fake Job and Offer Letter Risk Detection
     <br>
     <span class="small-note">Academic project demonstration</span>
 </div>
 
 <script>
-const genuine = {{ stats.genuine | tojson }};
-const fraudulent = {{ stats.fraudulent | tojson }};
+document.addEventListener("DOMContentLoaded", function () {
 
-new Chart(document.getElementById('jobChart'), {
-    type: 'doughnut',
-    data: {
-        labels: ['Genuine Jobs', 'Fraudulent Jobs'],
-        datasets: [{
-            data: [genuine, fraudulent],
-            backgroundColor: ['#16a36a', '#ef4444'],
-            borderWidth: 0
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { position: 'bottom' }
+    // Set progress bar widths without putting template code inside CSS.
+    const progressBars = document.querySelectorAll("[data-progress]");
+
+    progressBars.forEach(function (bar) {
+        let value = Number(bar.dataset.progress);
+
+        if (!Number.isFinite(value)) {
+            value = 0;
         }
+
+        value = Math.max(0, Math.min(100, value));
+        bar.style.width = value + "%";
+    });
+
+    // Job detection chart.
+    const chartCanvas = document.getElementById("jobChart");
+
+    if (chartCanvas && typeof Chart !== "undefined") {
+        const genuine = Number(chartCanvas.dataset.genuine || 0);
+        const fraudulent = Number(chartCanvas.dataset.fraudulent || 0);
+
+        new Chart(chartCanvas, {
+            type: "doughnut",
+            data: {
+                labels: ["Genuine Jobs", "Fraudulent Jobs"],
+                datasets: [{
+                    data: [genuine, fraudulent],
+                    backgroundColor: ["#16a36a", "#ef4444"],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        });
     }
+
+    // Show the selected offer letter filename.
+    const offerInput = document.getElementById("offer_letter");
+    const fileName = document.getElementById("fileName");
+
+    if (offerInput && fileName) {
+        offerInput.addEventListener("change", function () {
+            const file = this.files[0];
+
+            fileName.textContent = file
+                ? "Selected: " + file.name
+                : "No file selected";
+        });
+    }
+
 });
 </script>
 
